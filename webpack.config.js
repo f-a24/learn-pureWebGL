@@ -13,7 +13,7 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.(glsl|frag|vert)$/,
+        test: /\.(glsl|fs|vs|frag|vert)$/,
         loader: ['raw-loader', 'glslify-loader'],
         exclude: /node_modules/
       },
