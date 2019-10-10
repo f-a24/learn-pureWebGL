@@ -7,7 +7,7 @@ type ShaderModule = {
 const vertShaderModule: ShaderModule = require('./distortion.vs');
 const fragmentShaderModule: ShaderModule = require('./distortion.fs');
 
-export default (distSrc: string) => {
+export default (distSrc: string, auto: boolean) => {
   const assetUrls = [
     './images/nozomi.jpg',
     './images/eri.jpg',
@@ -22,9 +22,21 @@ export default (distSrc: string) => {
   canvasBlock.style.margin = '.5rem';
   canvasBlock.style.boxShadow =
     '0px 1px 3px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12)';
+  const canvasTitleBlock = document.createElement('div');
+  canvasTitleBlock.style.display = 'flex';
+  canvasTitleBlock.style.alignItems = 'center';
+  canvasTitleBlock.style.justifyContent = 'space-between';
   const canvasTitle = document.createElement('div');
   canvasTitle.innerHTML = `Distortion sample : ${distSrc}`;
-  canvasBlock.appendChild(canvasTitle);
+  canvasTitleBlock.appendChild(canvasTitle);
+  const canvasImg = document.createElement('img');
+  canvasImg.width = 100;
+  canvasImg.height = 100;
+  canvasImg.src = `./images/displacement/${distSrc}.jpg`;
+  canvasImg.alt = `${distSrc}.jpg`;
+  canvasTitleBlock.appendChild(canvasImg);
+
+  canvasBlock.appendChild(canvasTitleBlock);
 
   // canvas部構築
   const canvas = document.createElement('canvas');
@@ -137,13 +149,35 @@ export default (distSrc: string) => {
 
       img.onload = () => {
         // imageをテクスチャーとして更新する
-        gl.bindTexture(gl.TEXTURE_2D, textureArr[index]);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+        gl.bindTexture(gl.TEXTURE_2D, texture);
+        gl.texImage2D(
+          gl.TEXTURE_2D,
+          0,
+          gl.RGBA,
+          gl.RGBA,
+          gl.UNSIGNED_BYTE,
+          img
+        );
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(
+          gl.TEXTURE_2D,
+          gl.TEXTURE_MIN_FILTER,
+          gl.LINEAR_MIPMAP_NEAREST
+        );
         gl.generateMipmap(gl.TEXTURE_2D);
+        gl.bindTexture(gl.TEXTURE_2D, null);
+
+        // gl.bindTexture(gl.TEXTURE_2D, texture);
+        // gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img);
+        // gl.generateMipmap(gl.TEXTURE_2D);
+
+        // gl.bindTexture(gl.TEXTURE_2D, textureArr[index]);
+        // gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img);
+        // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+        // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+        // gl.generateMipmap(gl.TEXTURE_2D);
 
         if (index === 0) obj.currentTexture = texture;
         if (index === 1) obj.nextTexture = texture;
@@ -160,6 +194,13 @@ export default (distSrc: string) => {
 
   let arrIdx = 0;
   let isAnimation = false;
+
+  if (auto) {
+    setInterval(() => {
+      nextBtn.click();
+    }, 1000);
+  }
+
   nextBtn.addEventListener('click', () => {
     if (isAnimation) return;
     isAnimation = true;
