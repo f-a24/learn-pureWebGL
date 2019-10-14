@@ -6,6 +6,8 @@ import mosaic from '../src/ImageTransition/mosaic';
 import wave from '../src/ImageTransition/wave';
 import shader1 from '../src/ShaderSandbox/1';
 import shader2 from '../src/ShaderSandbox/2';
+import shader3 from '../src/ShaderSandbox/3';
+import shader4 from '../src/ShaderSandbox/4';
 import sample from '../src/sample';
 
 storiesOf('ImageTransition', module)
@@ -44,6 +46,16 @@ storiesOf('ShaderSandbox', module)
   .add('2', () => {
     document.body.innerHTML = '';
     document.body.appendChild(shader2());
+    return '';
+  })
+  .add('3', () => {
+    document.body.innerHTML = '';
+    document.body.appendChild(shader3());
+    return '';
+  })
+  .add('4', () => {
+    document.body.innerHTML = '';
+    document.body.appendChild(shader4());
     return '';
   });
 
