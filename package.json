@@ -9,7 +9,9 @@
     "format": "prettier-eslint --write src/**/*.ts",
     "precommit": "lint-staged",
     "start": "webpack-dev-server --config webpack.config.js --hot",
-    "test": "jest"
+    "test": "jest",
+    "storybook": "start-storybook -s ./public",
+    "build-storybook": "build-storybook -c .storybook -o docs"
   },
   "lint-staged": {
     "*.ts": [
@@ -21,20 +23,22 @@
     "reset-css": "^4.0.1"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^2.2.0",
-    "@typescript-eslint/parser": "^2.2.0",
-    "autoprefixer": "^9.6.1",
+    "@babel/core": "^7.6.2",
+    "@storybook/html": "^5.2.1",
+    "@typescript-eslint/eslint-plugin": "^2.3.3",
+    "@typescript-eslint/parser": "^2.3.3",
+    "autoprefixer": "^9.6.4",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
-    "eslint": "^6.3.0",
+    "eslint": "^6.5.1",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-config-prettier": "^6.3.0",
+    "eslint-config-prettier": "^6.4.0",
     "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-prettier": "^3.1.1",
     "glslify-loader": "^2.0.0",
-    "husky": "^3.0.5",
+    "husky": "^3.0.9",
     "jest": "^24.9.0",
-    "lint-staged": "^9.2.5",
+    "lint-staged": "^9.4.2",
     "node-sass": "^4.11.0",
     "postcss-loader": "^3.0.0",
     "prettier": "^1.18.2",
@@ -43,12 +47,12 @@
     "raw-loader": "^3.1.0",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
-    "ts-jest": "^24.0.0",
-    "ts-loader": "^6.1.0",
-    "typescript": "^3.6.3",
-    "url-loader": "^2.1.0",
-    "webpack": "^4.39.3",
-    "webpack-cli": "^3.3.8",
-    "webpack-dev-server": "^3.8.0"
+    "ts-jest": "^24.1.0",
+    "ts-loader": "^6.2.0",
+    "typescript": "^3.6.4",
+    "url-loader": "^2.2.0",
+    "webpack": "^4.41.1",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.2"
   }
 }

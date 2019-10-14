@@ -2,7 +2,7 @@ module.exports = {
   mode: 'production',
   entry: `${__dirname}/src/index.ts`,
   output: {
-    path: `${__dirname}/docs`,
+    path: `${__dirname}/public`,
     filename: 'index.js'
   },
   module: {
@@ -45,7 +45,7 @@ module.exports = {
     hints: false
   },
   devServer: {
-    contentBase: `${__dirname}/docs`,
+    contentBase: `${__dirname}/public`,
     port: 3000,
     hot: true,
     open: true
