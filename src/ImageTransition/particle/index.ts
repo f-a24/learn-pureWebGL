@@ -1,9 +1,9 @@
-// // シェーダーモジュール
-// type ShaderModule = {
-//     default: string;
-// };
-// const vertexShaderModule: ShaderModule = require('./particle.vs');
-// const fragmentShaderModule: ShaderModule = require('./particle.fs');
+// シェーダーモジュール
+type ShaderModule = {
+  default: string;
+};
+const vertShaderModule: ShaderModule = require('./vertex.glsl');
+const fragmentShaderModule: ShaderModule = require('./fragment.glsl');
 
 // const canvas = document.querySelector('canvas');
 // const gl = canvas.getContext('webgl');

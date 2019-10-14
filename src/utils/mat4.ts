@@ -53,12 +53,21 @@ export const perspective = (out, fovy, aspect, near, far) => {
 };
 
 export const translate = (out, a, v) => {
-  let x = v[0],
-    y = v[1],
-    z = v[2];
-  let a00, a01, a02, a03;
-  let a10, a11, a12, a13;
-  let a20, a21, a22, a23;
+  const x = v[0];
+  const y = v[1];
+  const z = v[2];
+  let a00;
+  let a01;
+  let a02;
+  let a03;
+  let a10;
+  let a11;
+  let a12;
+  let a13;
+  let a20;
+  let a21;
+  let a22;
+  let a23;
 
   if (a === out) {
     out[12] = a[0] * x + a[4] * y + a[8] * z + a[12];
@@ -101,17 +110,34 @@ export const translate = (out, a, v) => {
   return out;
 };
 export const rotate = (out, a, rad, axis) => {
-  let x = axis[0],
-    y = axis[1],
-    z = axis[2];
+  let x = axis[0];
+  let y = axis[1];
+  let z = axis[2];
   let len = Math.hypot(x, y, z);
-  let s, c, t;
-  let a00, a01, a02, a03;
-  let a10, a11, a12, a13;
-  let a20, a21, a22, a23;
-  let b00, b01, b02;
-  let b10, b11, b12;
-  let b20, b21, b22;
+  let s;
+  let c;
+  let t;
+  let a00;
+  let a01;
+  let a02;
+  let a03;
+  let a10;
+  let a11;
+  let a12;
+  let a13;
+  let a20;
+  let a21;
+  let a22;
+  let a23;
+  let b00;
+  let b01;
+  let b02;
+  let b10;
+  let b11;
+  let b12;
+  let b20;
+  let b21;
+  let b22;
 
   if (len < EPSILON) {
     return null;

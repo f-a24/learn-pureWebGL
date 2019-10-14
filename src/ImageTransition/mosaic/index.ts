@@ -2,8 +2,8 @@
 type ShaderModule = {
   default: string;
 };
-const vertShaderModule: ShaderModule = require('./mosaic.vs');
-const fragmentShaderModule: ShaderModule = require('./mosaic.fs');
+const vertShaderModule: ShaderModule = require('./vertex.glsl');
+const fragmentShaderModule: ShaderModule = require('./fragment.glsl');
 
 export default () => {
   const assetUrls = [

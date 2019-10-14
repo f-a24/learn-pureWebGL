@@ -2,8 +2,8 @@
 type ShaderModule = {
   default: string;
 };
-const vertShaderModule: ShaderModule = require('./distSlider.vs');
-const fragmentShaderModule: ShaderModule = require('./distSlider.fs');
+const vertShaderModule: ShaderModule = require('./vertex.glsl');
+const fragmentShaderModule: ShaderModule = require('./fragment.glsl');
 
 export default () => {
   const assetUrls = [

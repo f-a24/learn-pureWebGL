@@ -2,44 +2,29 @@
 type ShaderModule = {
   default: string;
 };
-const vertShaderModule: ShaderModule = require('./distortion.vs');
-const fragmentShaderModule: ShaderModule = require('./distortion.fs');
+const vertShaderModule: ShaderModule = require('./vertex.glsl');
+const fragmentShaderModule: ShaderModule = require('./fragment.glsl');
 
-export default (distSrc: string, auto: boolean) => {
+export default () => {
   const assetUrls = [
     './images/nozomi.jpg',
     './images/eri.jpg',
     './images/rin.jpg',
     './images/umi.jpg'
   ];
-  assetUrls.push(`./images/displacement/${distSrc}.jpg`);
+
   // 枠構築
   const canvasBlock = document.createElement('div');
-  canvasBlock.style.width = '400px';
+  canvasBlock.style.width = '1024px';
   canvasBlock.style.padding = '1rem';
   canvasBlock.style.margin = '.5rem';
   canvasBlock.style.boxShadow =
     '0px 1px 3px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12)';
-  const canvasTitleBlock = document.createElement('div');
-  canvasTitleBlock.style.display = 'flex';
-  canvasTitleBlock.style.alignItems = 'center';
-  canvasTitleBlock.style.justifyContent = 'space-between';
-  const canvasTitle = document.createElement('div');
-  canvasTitle.innerHTML = `Distortion sample : ${distSrc}`;
-  canvasTitleBlock.appendChild(canvasTitle);
-  const canvasImg = document.createElement('img');
-  canvasImg.width = 100;
-  canvasImg.height = 100;
-  canvasImg.src = `./images/displacement/${distSrc}.jpg`;
-  canvasImg.alt = `${distSrc}.jpg`;
-  canvasTitleBlock.appendChild(canvasImg);
-
-  canvasBlock.appendChild(canvasTitleBlock);
 
   // canvas部構築
   const canvas = document.createElement('canvas');
   canvas.style.width = '100%';
-  canvas.style.height = '368px';
+  canvas.style.height = '100%';
   canvas.style.margin = '1rem 0';
   canvasBlock.appendChild(canvas);
   const gl = canvas.getContext('webgl');
@@ -93,8 +78,7 @@ export default (distSrc: string, auto: boolean) => {
   const uTransLoc = gl.getUniformLocation(program, 'uTrans');
   const textureLocArr = [
     gl.getUniformLocation(program, 'uTexture0'),
-    gl.getUniformLocation(program, 'uTexture1'),
-    gl.getUniformLocation(program, 'uDisp')
+    gl.getUniformLocation(program, 'uTexture1')
   ];
 
   const obj = {
@@ -126,10 +110,6 @@ export default (distSrc: string, auto: boolean) => {
     gl.activeTexture(gl.TEXTURE0 + 1);
     gl.bindTexture(gl.TEXTURE_2D, obj.nextTexture);
     gl.uniform1i(textureLocArr[1], 1);
-
-    gl.activeTexture(gl.TEXTURE0 + 2);
-    gl.bindTexture(gl.TEXTURE_2D, textureArr[textureArr.length - 1]);
-    gl.uniform1i(textureLocArr[2], 2);
 
     gl.uniform1f(uTransLoc, obj.trans);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
@@ -165,23 +145,11 @@ export default (distSrc: string, auto: boolean) => {
         gl.generateMipmap(gl.TEXTURE_2D);
         gl.bindTexture(gl.TEXTURE_2D, null);
 
-        // gl.bindTexture(gl.TEXTURE_2D, texture);
-        // gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img);
-        // gl.generateMipmap(gl.TEXTURE_2D);
-
-        // gl.bindTexture(gl.TEXTURE_2D, textureArr[index]);
-        // gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img);
-        // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-        // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-        // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-        // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-        // gl.generateMipmap(gl.TEXTURE_2D);
-
         if (index === 0) obj.currentTexture = texture;
         if (index === 1) obj.nextTexture = texture;
 
         cnt++;
-        if (cnt === 5) render();
+        if (cnt === 4) render();
       };
       img.crossOrigin = 'Anonymous';
       img.src = url;
@@ -193,11 +161,11 @@ export default (distSrc: string, auto: boolean) => {
   let arrIdx = 0;
   let isAnimation = false;
 
-  if (auto) {
-    setInterval(() => {
-      nextBtn.click();
-    }, 1000);
-  }
+  // if (auto) {
+  //     setInterval(() => {
+  //         nextBtn.click();
+  //     }, 1000);
+  // }
 
   nextBtn.addEventListener('click', () => {
     if (isAnimation) return;
@@ -213,8 +181,9 @@ export default (distSrc: string, auto: boolean) => {
     let trans = 0;
     const animation = () => {
       const animId = requestAnimationFrame(animation);
-      trans += 0.01;
+      trans += 0.02;
       if (trans > 1) {
+        Object.assign(obj, { trans: 1 });
         isAnimation = false;
         cancelAnimationFrame(animId);
       } else {
@@ -238,8 +207,9 @@ export default (distSrc: string, auto: boolean) => {
     let trans = 1;
     const animation = () => {
       const animId = requestAnimationFrame(animation);
-      trans -= 0.01;
+      trans -= 0.02;
       if (trans < 0) {
+        Object.assign(obj, { trans: 0 });
         isAnimation = false;
         cancelAnimationFrame(animId);
       } else {
