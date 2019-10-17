@@ -15,7 +15,7 @@ export default () => {
 
   // 枠構築
   const canvasBlock = document.createElement('div');
-  canvasBlock.style.width = '1024px';
+  canvasBlock.style.display = 'inline-block';
   canvasBlock.style.padding = '1rem';
   canvasBlock.style.margin = '.5rem';
   canvasBlock.style.boxShadow =
@@ -23,8 +23,8 @@ export default () => {
 
   // canvas部構築
   const canvas = document.createElement('canvas');
-  canvas.style.width = '100%';
-  canvas.style.height = '100%';
+  canvas.width = 512;
+  canvas.height = 512;
   canvas.style.margin = '1rem 0';
   canvasBlock.appendChild(canvas);
   const gl = canvas.getContext('webgl');

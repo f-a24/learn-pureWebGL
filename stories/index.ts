@@ -9,6 +9,7 @@ import shader2 from '../src/ShaderSandbox/2';
 import shader3 from '../src/ShaderSandbox/3';
 import shader4 from '../src/ShaderSandbox/4';
 import sample from '../src/sample';
+import texture from '../src/sample/texture';
 
 storiesOf('ImageTransition', module)
   .add('channel', () => {
@@ -16,12 +17,12 @@ storiesOf('ImageTransition', module)
     document.body.appendChild(channel());
     return '';
   })
-  .add('distortion', () => {
+  .add('distortion-list : image', () => {
     document.body.innerHTML = '';
     distortionList(true);
     return '';
   })
-  .add('distSlder', () => {
+  .add('distortion', () => {
     document.body.innerHTML = '';
     document.body.appendChild(distSlider());
     return '';
@@ -59,8 +60,14 @@ storiesOf('ShaderSandbox', module)
     return '';
   });
 
-storiesOf('WebGL Sample', module).add('sample', () => {
-  document.body.innerHTML = '';
-  document.body.appendChild(sample());
-  return '';
-});
+storiesOf('WebGL Sample', module)
+  .add('sample', () => {
+    document.body.innerHTML = '';
+    document.body.appendChild(sample());
+    return '';
+  })
+  .add('texture', () => {
+    document.body.innerHTML = '';
+    document.body.appendChild(texture());
+    return '';
+  });

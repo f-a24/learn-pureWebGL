@@ -1,5 +1,6 @@
 import 'reset-css';
 import sample from './sample';
+import texture from './sample/texture';
 import distortionList from './ImageTransition/distortionList';
 import channel from './ImageTransition/channel';
 import mosaic from './ImageTransition/mosaic';

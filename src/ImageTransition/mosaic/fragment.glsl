@@ -9,8 +9,8 @@ varying vec2 vUv;
 void main() {
   vec2 uv0 = vUv;
   vec2 uv1 = vUv;
-  float moz0 = uTrans * 0.02;
-  float moz1 = (1.0 - uTrans) * 0.02;
+  float moz0 = uTrans * 0.05;
+  float moz1 = (1.0 - uTrans) * 0.05;
 
   if(moz0 > 0.0) {
     uv0 = floor(uv0 / moz0) * moz0 + (moz0 * 0.5);

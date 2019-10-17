@@ -15,7 +15,7 @@ export default (distSrc: string, auto: boolean) => {
   assetUrls.push(`./images/displacement/${distSrc}.jpg`);
   // 枠構築
   const canvasBlock = document.createElement('div');
-  canvasBlock.style.width = '400px';
+  canvasBlock.style.display = 'inline-block';
   canvasBlock.style.padding = '1rem';
   canvasBlock.style.margin = '.5rem';
   canvasBlock.style.boxShadow =
@@ -38,8 +38,8 @@ export default (distSrc: string, auto: boolean) => {
 
   // canvas部構築
   const canvas = document.createElement('canvas');
-  canvas.style.width = '100%';
-  canvas.style.height = '368px';
+  canvas.width = 400;
+  canvas.height = 400;
   canvas.style.margin = '1rem 0';
   canvasBlock.appendChild(canvas);
   const gl = canvas.getContext('webgl');
