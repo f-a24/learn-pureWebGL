@@ -1,9 +1,9 @@
 // シェーダーモジュール
-type ShaderModule = {
+import vertShaderModule from '../utils/defaultVertex';
+
+const fragmentShaderModule: ShaderModule = require('./fragment.glsl') as {
   default: string;
 };
-const vertShaderModule: ShaderModule = require('./vertex.glsl');
-const fragmentShaderModule: ShaderModule = require('./fragment.glsl');
 
 export default (distSrc: string, auto: boolean) => {
   const assetUrls = [
