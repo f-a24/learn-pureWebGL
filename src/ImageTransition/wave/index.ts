@@ -1,7 +1,7 @@
 // シェーダーモジュール
 import vertShaderModule from '../utils/defaultVertex';
 
-const fragmentShaderModule: ShaderModule = require('./fragment.glsl') as {
+const fragmentShaderModule = require('./fragment.glsl') as {
   default: string;
 };
 

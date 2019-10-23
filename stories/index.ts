@@ -4,6 +4,7 @@ import distortionList from '../src/ImageTransition/distortionList';
 import distSlider from '../src/ImageTransition/distortionSlider';
 import mosaic from '../src/ImageTransition/mosaic';
 import wave from '../src/ImageTransition/wave';
+import zoomBlur from '../src/ImageTransition/zoomBlur';
 import shader1 from '../src/ShaderSandbox/1';
 import shader2 from '../src/ShaderSandbox/2';
 import shader3 from '../src/ShaderSandbox/3';
@@ -35,6 +36,11 @@ storiesOf('ImageTransition', module)
   .add('wave', () => {
     document.body.innerHTML = '';
     document.body.appendChild(wave());
+    return '';
+  })
+  .add('zoomBlur', () => {
+    document.body.innerHTML = '';
+    document.body.appendChild(zoomBlur());
     return '';
   });
 
