@@ -1,9 +1,6 @@
 // シェーダーモジュール
-type ShaderModule = {
-  default: string;
-};
-const vertShaderModule: ShaderModule = require('./vertex.glsl');
-const fragmentShaderModule: ShaderModule = require('./fragment.glsl');
+import vertexShader from './vertex.glsl';
+import fragmentShader from './fragment.glsl';
 
 export default () => {
   // 枠構築
@@ -27,7 +24,7 @@ export default () => {
 
   // vertextシェーダをコンパイル
   const vShader = gl.createShader(gl.VERTEX_SHADER);
-  gl.shaderSource(vShader, vertShaderModule.default);
+  gl.shaderSource(vShader, vertexShader);
   gl.compileShader(vShader);
 
   // fragmentシェーダをコンパイル
@@ -56,7 +53,7 @@ export default () => {
   const uResolutionLoc = gl.getUniformLocation(program, 'uResolution');
 
   const obj = {
-    trans: 0
+    trans: 0,
   };
 
   const render = () => {

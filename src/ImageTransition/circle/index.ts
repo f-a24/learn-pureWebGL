@@ -8,6 +8,7 @@ export default () => {
     './images/eri.jpg',
     './images/rin.jpg',
     './images/umi.jpg',
+    './images/displacement/1.jpg',
   ];
 
   // 枠構築
@@ -178,9 +179,8 @@ export default () => {
     let trans = 0;
     const animation = () => {
       const animId = requestAnimationFrame(animation);
-      trans += 0.02;
+      trans += 0.01;
       if (trans > 1) {
-        Object.assign(obj, { trans: 1 });
         isAnimation = false;
         cancelAnimationFrame(animId);
       } else {
@@ -204,9 +204,8 @@ export default () => {
     let trans = 1;
     const animation = () => {
       const animId = requestAnimationFrame(animation);
-      trans -= 0.02;
+      trans -= 0.01;
       if (trans < 0) {
-        Object.assign(obj, { trans: 0 });
         isAnimation = false;
         cancelAnimationFrame(animId);
       } else {

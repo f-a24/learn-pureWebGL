@@ -56,7 +56,7 @@ export default () => {
   const uResolutionLoc = gl.getUniformLocation(program, 'uResolution');
 
   const obj = {
-    trans: 0
+    trans: 0,
   };
 
   const render = () => {

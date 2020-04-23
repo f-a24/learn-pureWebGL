@@ -1,14 +1,16 @@
 // シェーダーモジュール
 import vertexShader from '../utils/vertex.glsl';
 import fragmentShader from './fragment.glsl';
+import { easingEaseInExpo, easingEaseOutExpo } from '../utils/easing';
 
-export default () => {
+export default (distSrc: string, auto: boolean) => {
   const assetUrls = [
     './images/nozomi.jpg',
     './images/eri.jpg',
     './images/rin.jpg',
     './images/umi.jpg',
   ];
+  let easingChangeValue = 0.5;
 
   // 枠構築
   const canvasBlock = document.createElement('div');
@@ -17,6 +19,26 @@ export default () => {
   canvasBlock.style.margin = '.5rem';
   canvasBlock.style.boxShadow =
     '0px 1px 3px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12)';
+  const canvasTitleBlock = document.createElement('div');
+  canvasTitleBlock.style.display = 'flex';
+  canvasTitleBlock.style.alignItems = 'center';
+  canvasTitleBlock.style.justifyContent = 'space-between';
+  const canvasTitle = document.createElement('div');
+  canvasTitle.innerHTML = `Easing sample : easingEaseInExpo`;
+  canvasTitleBlock.appendChild(canvasTitle);
+  const canvasInput = document.createElement('input');
+  canvasInput.type = 'range';
+  canvasInput.min = '0';
+  canvasInput.max = '1';
+  canvasInput.step = '0.01';
+  canvasInput.value = `${easingChangeValue}`;
+  canvasTitleBlock.appendChild(canvasInput);
+
+  canvasBlock.appendChild(canvasTitleBlock);
+
+  canvasInput.addEventListener('change', (e) => {
+    easingChangeValue = parseFloat((e.target as HTMLInputElement).value);
+  });
 
   // canvas部構築
   const canvas = document.createElement('canvas');
@@ -158,11 +180,11 @@ export default () => {
   let arrIdx = 0;
   let isAnimation = false;
 
-  // if (auto) {
-  //     setInterval(() => {
-  //         nextBtn.click();
-  //     }, 1000);
-  // }
+  if (auto) {
+    setInterval(() => {
+      nextBtn.click();
+    }, 1000);
+  }
 
   nextBtn.addEventListener('click', () => {
     if (isAnimation) return;
@@ -178,13 +200,15 @@ export default () => {
     let trans = 0;
     const animation = () => {
       const animId = requestAnimationFrame(animation);
-      trans += 0.02;
+      trans += 0.01;
       if (trans > 1) {
         Object.assign(obj, { trans: 1 });
         isAnimation = false;
         cancelAnimationFrame(animId);
       } else {
-        Object.assign(obj, { trans });
+        Object.assign(obj, {
+          trans: easingEaseInExpo(trans, 0, easingChangeValue),
+        });
       }
     };
     animation();
@@ -201,16 +225,18 @@ export default () => {
     }
     obj.currentTexture = textureArr[arrIdx];
 
-    let trans = 1;
+    let trans = 0;
     const animation = () => {
       const animId = requestAnimationFrame(animation);
-      trans -= 0.02;
-      if (trans < 0) {
+      trans += 0.01;
+      if (trans > 1) {
         Object.assign(obj, { trans: 0 });
         isAnimation = false;
         cancelAnimationFrame(animId);
       } else {
-        Object.assign(obj, { trans });
+        Object.assign(obj, {
+          trans: 1 - easingEaseInExpo(trans, 0, easingChangeValue),
+        });
       }
     };
     animation();

@@ -1,9 +1,6 @@
 // シェーダーモジュール
-type ShaderModule = {
-  default: string;
-};
-const vertShaderModule: ShaderModule = require('./texture.vs');
-const fragmentShaderModule: ShaderModule = require('./texture.fs');
+import vertexShader from './textureVertex.glsl';
+import fragmentShader from './textureFragment.glsl';
 
 export default () => {
   // 枠構築
@@ -29,12 +26,12 @@ export default () => {
 
   // vertextシェーダをコンパイル
   const vShader = gl.createShader(gl.VERTEX_SHADER);
-  gl.shaderSource(vShader, vertShaderModule.default);
+  gl.shaderSource(vShader, vertexShader);
   gl.compileShader(vShader);
 
   // fragmentシェーダをコンパイル
   const fShader = gl.createShader(gl.FRAGMENT_SHADER);
-  gl.shaderSource(fShader, fragmentShaderModule.default);
+  gl.shaderSource(fShader, fragmentShader);
   gl.compileShader(fShader);
 
   gl.attachShader(program, vShader);

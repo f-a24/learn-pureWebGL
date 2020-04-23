@@ -1,6 +1,6 @@
-import distortion from './distortion';
+import easing from './easing';
 
-const distortionList = (auto: boolean) => {
+const easingList = (auto: boolean) => {
   document.body.appendChild(distortionHeader(auto));
   const distortionArea = document.createElement('div');
   distortionArea.style.display = 'flex';
@@ -9,7 +9,7 @@ const distortionList = (auto: boolean) => {
   distortionArea.style.padding = '1rem';
   distortionArea.style.flexWrap = 'wrap';
   for (let i = 1; i <= 16; i++) {
-    distortionArea.appendChild(distortion(`${i}`, auto));
+    distortionArea.appendChild(easing(`${i}`, auto));
   }
   document.body.appendChild(distortionArea);
 };
@@ -30,7 +30,7 @@ const distortionHeader = (auto: boolean) => {
   inputAuto.checked = auto;
   inputAuto.addEventListener('change', (e) => {
     document.body.innerHTML = '';
-    distortionList((e.target as HTMLInputElement).checked);
+    easingList((e.target as HTMLInputElement).checked);
   });
   const inputAutoLabel = document.createElement('label');
   inputAutoLabel.htmlFor = 'autoCheck';
@@ -40,4 +40,4 @@ const distortionHeader = (auto: boolean) => {
   return titleBlock;
 };
 
-export default distortionList;
+export default easingList;

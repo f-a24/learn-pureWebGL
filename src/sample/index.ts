@@ -1,19 +1,13 @@
 import * as mat4 from '../utils/mat4';
 
 // シェーダーモジュール
-type ShaderModule = {
-  default: string;
-};
-const vertShaderModule: ShaderModule = require('./vertex.glsl');
-const fragmentShaderModule: ShaderModule = require('./fragment.glsl');
+import vertexShader from './vertex.glsl';
+import fragmentShader from './fragment.glsl';
 
 export default () => {
   // シェーダーのコンパイル
   const getShader = (gl: WebGLRenderingContext, id: string) => {
-    const source =
-      id === 'shader-fs'
-        ? fragmentShaderModule.default
-        : vertShaderModule.default;
+    const source = id === 'shader-fs' ? fragmentShader : vertexShader;
     const shader =
       id === 'shader-fs'
         ? gl.createShader(gl.FRAGMENT_SHADER)
@@ -64,7 +58,7 @@ export default () => {
       [-1.0, 1.0, -1.0, -1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, -1.0], // Top face
       [-1.0, -1.0, -1.0, 1.0, -1.0, -1.0, 1.0, -1.0, 1.0, -1.0, -1.0, 1.0], // Bottom face
       [1.0, -1.0, -1.0, 1.0, 1.0, -1.0, 1.0, 1.0, 1.0, 1.0, -1.0, 1.0], // Right face
-      [-1.0, -1.0, -1.0, -1.0, -1.0, 1.0, -1.0, 1.0, 1.0, -1.0, 1.0, -1.0] // Left face
+      [-1.0, -1.0, -1.0, -1.0, -1.0, 1.0, -1.0, 1.0, 1.0, -1.0, 1.0, -1.0], // Left face
     ].flat();
 
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
@@ -74,7 +68,7 @@ export default () => {
       [0.0, 1.0, 0.0, 1.0], // Top face: green
       [0.0, 0.0, 1.0, 1.0], // Bottom face: blue
       [1.0, 1.0, 0.0, 1.0], // Right face: yellow
-      [1.0, 0.0, 1.0, 1.0] // Left face: purple
+      [1.0, 0.0, 1.0, 1.0], // Left face: purple
     ];
 
     const colors = faceColors.reduce((a, c) => a.concat(c, c, c, c), []);
@@ -92,7 +86,7 @@ export default () => {
       [8, 9, 10, 8, 10, 11], // top
       [12, 13, 14, 12, 14, 15], // bottom
       [16, 17, 18, 16, 18, 19], // right
-      [20, 21, 22, 20, 22, 23] // left
+      [20, 21, 22, 20, 22, 23], // left
     ].flat();
 
     gl.bufferData(
@@ -104,7 +98,7 @@ export default () => {
     return {
       position: positionBuffer,
       color: colorBuffer,
-      indices: indexBuffer
+      indices: indexBuffer,
     };
   };
 
@@ -121,15 +115,15 @@ export default () => {
     program: shaderProgram,
     attribLocations: {
       vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
-      vertexColor: gl.getAttribLocation(shaderProgram, 'aVertexColor')
+      vertexColor: gl.getAttribLocation(shaderProgram, 'aVertexColor'),
     },
     uniformLocations: {
       projectionMatrix: gl.getUniformLocation(
         shaderProgram,
         'uProjectionMatrix'
       ),
-      modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix')
-    }
+      modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix'),
+    },
   };
 
   const buffers = initBuffers(gl);

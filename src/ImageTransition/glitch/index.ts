@@ -1,16 +1,13 @@
 // シェーダーモジュール
-import vertShaderModule from '../utils/defaultVertex';
-
-const fragmentShaderModule = require('./fragment.glsl') as {
-  default: string;
-};
+import vertexShader from '../utils/vertex.glsl';
+import fragmentShader from './fragment.glsl';
 
 export default () => {
   const assetUrls = [
     './images/nozomi.jpg',
     './images/eri.jpg',
     './images/rin.jpg',
-    './images/umi.jpg'
+    './images/umi.jpg',
   ];
 
   // 枠構築
@@ -50,12 +47,12 @@ export default () => {
 
   // vertextシェーダをコンパイル
   const vShader = gl.createShader(gl.VERTEX_SHADER);
-  gl.shaderSource(vShader, vertShaderModule.default);
+  gl.shaderSource(vShader, vertexShader);
   gl.compileShader(vShader);
 
   // fragmentシェーダをコンパイル
   const fShader = gl.createShader(gl.FRAGMENT_SHADER);
-  gl.shaderSource(fShader, fragmentShaderModule.default);
+  gl.shaderSource(fShader, fragmentShader);
   gl.compileShader(fShader);
 
   gl.attachShader(program, vShader);
@@ -78,13 +75,13 @@ export default () => {
   const uTransLoc = gl.getUniformLocation(program, 'uTrans');
   const textureLocArr = [
     gl.getUniformLocation(program, 'uTexture0'),
-    gl.getUniformLocation(program, 'uTexture1')
+    gl.getUniformLocation(program, 'uTexture1'),
   ];
 
   const obj = {
     currentTexture: textureArr[0],
     nextTexture: textureArr[1],
-    trans: 0
+    trans: 0,
   };
 
   const render = () => {

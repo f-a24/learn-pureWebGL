@@ -1,9 +1,6 @@
 // シェーダーモジュール
-type ShaderModule = {
-  default: string;
-};
-const vertShaderModule: ShaderModule = require('./vertex.glsl');
-const fragmentShaderModule: ShaderModule = require('./fragment.glsl');
+import vertexShader from '../utils/vertex.glsl';
+import fragmentShader from './fragment.glsl';
 
 // const canvas = document.querySelector('canvas');
 // const gl = canvas.getContext('webgl');
